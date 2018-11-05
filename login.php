@@ -19,7 +19,7 @@ if($row){
     session_write_close();
     header("Location: index.php");
 }else{
-	echo '<script> alert("Something went wrong! Please Login again."); window.location.replace("/OnlineStore/index.php"); </script>';
+	echo '<script> alert("Something went wrong! Please Login again."); window.location.replace("./index.php"); </script>';
 }
 
 ?>
