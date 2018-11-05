@@ -4,7 +4,7 @@ ini_set('display_errors', 0);
 session_start();
 include("conn.php");
 
-$sql_query_food = 'SELECT * FROM MENU WHERE 1';
+$sql_query_food = 'SELECT * FROM menu WHERE 1';
 $query_food = mysqli_query($conn, $sql_query_food);
 $query_food2 = mysqli_query($conn, $sql_query_food);
 
@@ -101,11 +101,11 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   
   <?php
     while($array_food = mysqli_fetch_array($query_food)){
-      $id = $array_food['id']; ?>
+      $id = $array_food['id'];  ?>
       <div class="w3-third w3-container">
       <div class="w3-display-container">
         <img src="<?php echo $array_food['img']; ?>" style="width:100%; heigh:100%">
-        <?php if($_SESSION['status'] == 'admin'){ ?>
+        <?php if($_SESSION['status'] == 'admin'){  ?>
         <div class="w3-display-middle w3-display-hover">
             <button class="w3-button w3-black" onclick="document.getElementById('<?php echo $id; ?>').style.display='block'">Edit</button>
             <form method="POST" action="remove.php">
