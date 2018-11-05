@@ -134,7 +134,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     
 
   
-  <div class="w3-black w3-center w3-padding-24"> Welcome to N&N Café </div>
+  <div class="w3-black w3-center w3-padding-24"> Welcome to NJ Network Devices </div>
 
   <!-- End page content -->
 </div>
