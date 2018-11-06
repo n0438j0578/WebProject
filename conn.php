@@ -8,4 +8,11 @@
 	if($conn->connect_error){
 		die('Connection Failed: ' . $conn->connect_error );
 	}
+
+
+	//	$conn = new MongoDB\Driver\Manager("mongodb://localhost:27017");
+	//	echo "Connection Successfull";
+
+	//	$database = $conn -> selectDatabase("WebProject");
+	//	echo "Select Successfull";
 ?>
