@@ -187,6 +187,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
       <form method="POST" action="addItem.php" enctype="multipart/form-data">
         <p><input class="w3-input w3-border" type="text" placeholder="Enter Name" name="itemName"></p>
         <p><input class="w3-input w3-border" type="text" placeholder="Price" name="price"></p>
+        <p><input class="w3-input w3-border" type="text" placeholder="Amount" name="amount"></p>
         <p><input class="w3-input w3-border" type="text" placeholder="Enter Desciption (If any)" name="itemDes"></p>
         <p><input class="w3-input w3-border" type="file" placeholder="Enter Image path" name="imgage"></p>
         <input type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom" onclick="document.getElementById('addItem').style.display='none'" value="Add Item">
