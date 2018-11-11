@@ -30,7 +30,7 @@ echo $total;
 <!DOCTYPE html>
 
 <html>
-<title>NJ Network Devices</title>
+<title>NJ Network Device</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -48,7 +48,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 <nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
   <div class="w3-container w3-display-container w3-padding-16">
     <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
-    <h3 class="w3-wide"><b>NJ Network Devices</b></h3>
+    <h3 class="w3-wide" ><a href="index.php" style="text-decoration: none"><b>NJ Network Devices</b></a></h3>
   </div>
   <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
     <a href="#" class="w3-bar-item w3-button">Router Modem</a>
@@ -101,11 +101,11 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   
   <?php
     while($array_food = mysqli_fetch_array($query_food)){
-      $id = $array_food['id'];  ?>
+      $id = $array_food['id']; ?>
       <div class="w3-third w3-container">
       <div class="w3-display-container">
         <img src="<?php echo $array_food['img']; ?>" style="width:100%; heigh:100%">
-        <?php if($_SESSION['status'] == 'admin'){  ?>
+        <?php if($_SESSION['status'] == 'admin'){ ?>
         <div class="w3-display-middle w3-display-hover">
             <button class="w3-button w3-black" onclick="document.getElementById('<?php echo $id; ?>').style.display='block'">Edit</button>
             <form method="POST" action="remove.php">
@@ -116,8 +116,8 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
         <?php }else if($_SESSION['status'] == 'user'){ ?>
           <div class="w3-display-middle w3-display-hover">
             <form method="POST" action="addCart.php">
-            <input type="hidden" value="<?php echo $id; ?>" name="id">
-            <input type="hidden" value="<?php echo $array_food['name']; ?>" name="name">
+              <input type="hidden" value="<?php echo $id; ?>" name="id">
+              <input type="hidden" value="<?php echo $array_food['name']; ?>" name="name">
               <input type="hidden" value="<?php echo $array_food['price']; ?>" name="price">
               <input type="hidden" value="<?php echo $array_food['img']; ?>" name="image">
               <input type="hidden" value="1" name="quantity">
@@ -126,7 +126,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
         </div>
 
         <?php } ?>  </div>
-        <p><?php echo $array_food['name']; ?><br><b><?php echo $array_food['price']; ?> Baht.</b></p>
+        <p><a href="product_detail.php/?idq=<?php echo $id; ?>" style="text-decoration: none"><?php echo $array_food['name']; ?></a><br><b><?php echo $array_food['price']; ?> Baht.</b><br><?php echo $array_food['amount']; ?> available.</p>
       </div>
 <?php    }
   ?>
@@ -134,7 +134,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     
 
   
-  <div class="w3-black w3-center w3-padding-24"> Welcome to NJ Network Devices </div>
+  <div class="w3-black w3-center w3-padding-24"> Welcome to NJ Network Device</div>
 
   <!-- End page content -->
 </div>
@@ -213,6 +213,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
               <input type ="hidden" name="id" value="<?php echo $id; ?>">
                 <p><input class="w3-input w3-border" type="text" placeholder="Enter Name" name="itemName" value="<?php echo $array_food['name']; ?>"></p>
                 <p><input class="w3-input w3-border" type="number" placeholder="Price" name="price" value="<?php echo $array_food['price']; ?>"></p>
+                <p><input class="w3-input w3-border" type="number" placeholder="Amount" name="amount" value="<?php echo $array_food['amount']; ?>"></p>
                 <p><input class="w3-input w3-border" type="text" placeholder="Enter Desciption (If any)" name="itemDes" value="<?php echo $array_food['des']; ?>"></p>
                 <input type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom" onclick="document.getElementById('<?php echo $id; ?>').style.display='none'" value="Update">
                 </form>
@@ -224,6 +225,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 ?>
 
 
+<!-- Add to cart -->
 <?php
 if(isset($_COOKIE[$shopping_cart_name])){
   $cookie_data = stripslashes($_COOKIE[$shopping_cart_name]);
@@ -235,12 +237,20 @@ if(isset($_COOKIE[$shopping_cart_name])){
               <h2 class="w3-wide" >Items in cart</h2>
               <p style="align:center">Please checkout.</p>
               <table align="center">
+              <tr>
+    <th></th>
+    <th>Name</th>
+    <th>Amount</th>
+    <th>Price</th>
+  </tr>
+  <tr>
 <?php
   foreach($cart_data as $keys => $values){ ?>
-              <tr>
-                <td><?php echo $values["item_name"]; ?></td>
-                <td> <?php echo $values["item_price"]; ?> Baht.</td>
-                <td>X<?php echo $values["item_quantity"]; ?></td>
+  <th><img src="<?php echo $values["item_img"];; ?>" style="width: 30px; height: 30px;"></th>
+  <td><a href="product_detail.php?idq=<?php echo $values["item_id"]; ?>"><?php echo $values["item_name"]; ?></a></td>
+  <td align="right">x<?php echo $values["item_quantity"]; ?></td>
+  <td align="right"> <?php echo $values["item_price"]; ?></td>
+    
                 
                 <!-- <td>$ <?php echo number_format($values["item_quantity"] * $values["item_price"], 2);?></td> -->
                 <!-- <td><a href="index.php?action=delete&id=<?php echo $values["item_id"]; ?>"><span class="text-danger">Remove</span></a></td> -->
@@ -249,7 +259,7 @@ if(isset($_COOKIE[$shopping_cart_name])){
 <?php
     } ?>
     </table>
-    <p>Total: <?php echo $total; ?> Baht.</p>
+    <p align="right">Total: <b><?php echo $total; ?></b> Baht.</p>
 <form method="POST" action="checkout_cart.php" enctype="multipart/form-data">
                 <input type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom" onclick="document.getElementById('thecart').style.display='none'" value="Checkout">
                 </form>
