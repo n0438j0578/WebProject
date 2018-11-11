@@ -103,20 +103,20 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   <!-- Product grid -->
   <div class="w3-row-padding">
     <h4> <?php echo $pName ?> </h4>
-    <img src="<?php echo $details['img']; ?>" style="width:50%; heigh:50%">
+    <img src="/WebProject/<?php echo $details['img']; ?>" style="width:50%; heigh:50%">
     <br><br>
     <div class="container">
-    <h6><b>รายละเอียด</b></h6>
+    <h6><b>Description:</b></h6>
     <p><?php echo $details['des']; ?></p>
     <table>
       <tr>
-        <td><b>เหลือ   </b></td>
-        <td><?php echo $details['amount']; ?> ชิ้น</td>
+        <td><b>Available: </b></td>
+        <td><?php echo $details['amount']; ?> items.</td>
       </tr>
 
       <tr>
-        <td><b>ราคา</b></td>
-        <td><?php echo $details['price']; ?> บาท</td>
+        <td><b>Price: </b></td>
+        <td><?php echo $details['price']; ?> Baht.</td>
       </tr>
 
       
