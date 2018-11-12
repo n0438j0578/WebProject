@@ -7,7 +7,7 @@ $filename = $_FILES['imgage']['name'];
 $amount = $_POST['amount'];
 
 if ($_FILES['imgage']['name'] != "" ) {
-    if(!move_uploaded_file($_FILES["imgage"]["tmp_name"], "./food/".$_FILES["imgage"]["name"]))
+    if(!move_uploaded_file($_FILES["imgage"]["tmp_name"], "./img/".$_FILES["imgage"]["name"]))
       die( "Upload error with code ".$_FILES["imgage"]["error"]);
 }else die("You did not specify an input file or file excedd form");
 
