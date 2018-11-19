@@ -54,6 +54,64 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "เหลือไหม",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"text\": \"ASUS Dual-band Wireless-AC1200 router RT-AC1200G+ เหลือไหม\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:20000/api/word",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "20000",
+					"path": [
+						"api",
+						"word"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "กรณีไม่เข้ากับคำถามไหนเลย",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"text\": \"พิมไรมาก็ได้\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:20000/api/word",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "20000",
+					"path": [
+						"api",
+						"word"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
