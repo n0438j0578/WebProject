@@ -1,6 +1,7 @@
 <?php
 	 $host = "localhost";
 	 $user = "root";
+	 //$pass = "qwer1234";
 	 $pass = "P@ssword";
 	 $db = "N&N_Cafe";
 
