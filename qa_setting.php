@@ -34,6 +34,7 @@ if(isset($_POST["addQA"])){
   $response_status = $data_response['Status'];
   $response_message = $data_response['StatusMessage'];
   $response_result = $data_response['Result'];
+}
 ?>
 <!DOCTYPE html>
 
