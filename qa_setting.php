@@ -1,7 +1,7 @@
 <?php
 //v3
-// error_reporting(0);
-// ini_set('display_errors', 0);
+error_reporting(0);
+ini_set('display_errors', 0);
 session_start();
 include "conn.php";
 
@@ -198,7 +198,7 @@ while ($row = mysqli_fetch_array($question)) {?>
       <p><?php echo $response_message.": ".$response_result; ?></p>
     </div> 
 <?php  
-  }else{ ?>
+  }else if($response_status == "failed"){ ?>
     <div class="w3-panel w3-red w3-display-container w3-round w3-card-4">
     <span onclick="this.parentElement.style.display='none'" class="w3-button w3-large w3-display-topright">&times;</span>
       <h3>Failed!</h3>
