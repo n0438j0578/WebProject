@@ -53,8 +53,10 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
     <a href="#" class="w3-bar-item w3-button">Router Modem</a>
     <br>
+    <?php if ($_SESSION['status'] == 'admin') {?>
     <a href="qa_setting.php" class="w3-bar-item w3-button">Q/A Setting</a>
     <br>
+    <?php } ?>
   </div>
  
   
