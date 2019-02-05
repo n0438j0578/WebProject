@@ -159,7 +159,7 @@ while ($row = mysqli_fetch_array($question)) {?>
 
 <br><br> -->
 
-<form action="qa_setting.php" method="post">
+
   <div class="borderDiv" >
   <?php
 if(isset($_POST["addQA"])){
@@ -201,6 +201,7 @@ if(isset($_POST["addQA"])){
 <?php }
 }
 ?>
+<form action="qa_setting.php" method="post">
         <div>
             <div class="row" style="margin-top: 20px">
               <div class="col-lg-2">
@@ -234,8 +235,9 @@ if(isset($_POST["addQA"])){
               <button class="w3-button w3-border w3-round-large w3-red w3-hover-white" >Clear</button>
             </div>
         </div>
+        </form>
   </div>
-</form>
+
 
 
   <div class="w3-black w3-center w3-padding-24" style="margin-top: 100px"> ยินดีต้อนรับสู่ NJ Network Devices </div>
