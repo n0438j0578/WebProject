@@ -72,6 +72,46 @@ input[type=text], select {
 </style>
 
 <body class="w3-content" style="max-width:1200px; margin-top: 25px;">
+<?php
+if(isset($_POST["addQA"])){
+  $question = $_POST["question"];
+  $answer = $_POST["answer"];
+  $qtype = $_POST["qtype"];
+  
+  //POST TO http://35.198.240.228:20000/api/wordset
+  $url = 'http://35.198.240.228:20000/api/wordset';
+
+  $dataToSend = array(
+    'text' => $question,
+    'type' => $qtype,
+    'answer' => $answer
+  );
+  $payload = json_encode($dataToSend);
+
+  $ch = curl_init( $url );
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  $response = curl_exec($ch);
+
+  $data_response = json_decode($response, true);
+
+  if($data_response['Status'] == "success"){ ?>
+    <div class="w3-panel w3-green w3-display-container w3-round w3-card-4">
+    <span onclick="this.parentElement.style.display='none'" class="w3-button w3-large w3-display-topright">&times;</span>
+      <h3>Success!</h3>
+      <p><?php echo $data_response['StatusMessage'].": ".$data_response['Result']; ?></p>
+    </div> 
+<?php  
+  }else{ ?>
+    <div class="w3-panel w3-red w3-display-container w3-round w3-card-4">
+    <span onclick="this.parentElement.style.display='none'" class="w3-button w3-large w3-display-topright">&times;</span>
+      <h3>Failed!</h3>
+      <p><?php echo $data_response['StatusMessage'].": ".$data_response['Result']; ?></p>
+    </div> 
+<?php }
+}
+?>
 
 <!-- Sidebar/menu -->
 <nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
@@ -162,46 +202,6 @@ while ($row = mysqli_fetch_array($question)) {?>
 
 
   <div class="borderDiv" >
-  <?php
-if(isset($_POST["addQA"])){
-  $question = $_POST["question"];
-  $answer = $_POST["answer"];
-  $qtype = $_POST["qtype"];
-  
-  //POST TO http://35.198.240.228:20000/api/wordset
-  $url = 'http://35.198.240.228:20000/api/wordset';
-
-  $dataToSend = array(
-    'text' => $question,
-    'type' => $qtype,
-    'answer' => $answer
-  );
-  $payload = json_encode($dataToSend);
-
-  $ch = curl_init( $url );
-  curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-  curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  $response = curl_exec($ch);
-
-  $data_response = json_decode($response, true);
-
-  if($data_response['Status'] == "success"){ ?>
-    <div class="w3-panel w3-green w3-display-container w3-round w3-card-4">
-    <span onclick="this.parentElement.style.display='none'" class="w3-button w3-large w3-display-topright">&times;</span>
-      <h3>Success!</h3>
-      <p><?php echo $data_response['StatusMessage'].": ".$data_response['Result']; ?></p>
-    </div> 
-<?php  
-  }else{ ?>
-    <div class="w3-panel w3-red w3-display-container w3-round w3-card-4">
-    <span onclick="this.parentElement.style.display='none'" class="w3-button w3-large w3-display-topright">&times;</span>
-      <h3>Failed!</h3>
-      <p><?php echo $data_response['StatusMessage'].": ".$data_response['Result']; ?></p>
-    </div> 
-<?php }
-}
-?>
 <form action="qa_setting.php" method="post">
         <div>
             <div class="row" style="margin-top: 20px">
