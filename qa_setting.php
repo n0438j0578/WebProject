@@ -205,7 +205,6 @@ while ($row = mysqli_fetch_array($question)) {?>
       <p><?php echo $response_message.": ".$response_result; ?></p>
     </div> 
 <?php }
-}
 ?>
 <form action="qa_setting.php" method="post">
         <div>
