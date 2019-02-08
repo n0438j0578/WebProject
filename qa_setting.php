@@ -150,44 +150,6 @@ if ($_SESSION['status'] == null) {?>
     </p>
   </header>
 
-<!-- <?php
-$questionQuery = 'SELECT qs FROM question';
-$question = mysqli_query($conn, $questionQuery);
-?>
-
-<div class="container">
-
-
-    <table class="table table-bordered">
-    <tr>
-        <th>Features</th>
-    </tr>
-    <td id="area1" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:100px; high:100px">
-    <?php
-$id_count = 0;
-while ($row = mysqli_fetch_array($question)) {?>
-        <!-- <tr> -->
-            <!-- <td> -->
-              <button id="<?php echo $id_count; ?>" draggable="true" ondragstart="drag(event)" ><?php echo $row['qs']; ?></button>
-              <?php $id_count++;?>
-            <!-- </td> -->
-        <!-- </tr> -->
-    <?php }?>
-    </td>
-    </table>
-<br><br>
-    <table>
-    <tr>
-        <th>Greeting</th>
-    </tr>
-    <td  id="area2" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:100px; high:100px">
-      <div> </div>
-    </td>
-  </table>
-</div>
-
-<br><br> -->
-
 
   <div class="borderDiv" >
   <?php
@@ -338,19 +300,6 @@ function w3_close() {
     document.getElementById("myOverlay").style.display = "none";
 }
 
-function allowDrop(ev) {
-  ev.preventDefault();
-}
-
-function drag(ev) {
-  ev.dataTransfer.setData("text", ev.target.id);
-}
-
-function drop(ev) {
-  ev.preventDefault();
-  var data = ev.dataTransfer.getData("text");
-  ev.target.appendChild(document.getElementById(data));
-}
 </script>
 
 </body>
