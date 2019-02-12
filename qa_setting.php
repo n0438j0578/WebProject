@@ -13,15 +13,24 @@ if(isset($_POST["addQA"])){
   $question = $_POST["question"];
   $answer = $_POST["answer"];
   $qtype = $_POST["qtype"];
-  
+
+  $str = "";
+
+  foreach ($answer as $index => $value) {
+    // $str = $str.$answer[$index].":;";
+    $str = $str.$answer[$index].":;";
+  }
+
   //POST TO http://35.198.240.228:20000/api/wordset
   $url = 'http://35.198.240.228:20000/api/wordset';
 
   $dataToSend = array(
     'text' => $question,
     'type' => $qtype,
-    'answer' => $answer
+    'answer' => $str
   );
+  
+
   $payload = json_encode($dataToSend);
 
   $ch = curl_init( $url );
@@ -48,17 +57,24 @@ if(isset($_POST["addQA"])){
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 </head>
 
 <style>
 .w3-sidebar a {font-family: "Roboto", sans-serif}
+
 body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
+
 table, td, th {
   border: 1px solid #ddd;
   text-align: left;
@@ -96,6 +112,17 @@ input[type=text], select {
   border-radius: 4px;
   box-sizing: border-box;
 }
+
+ul.ui-autocomplete {
+    list-style: none;
+}
+
+.btn-remove{
+  display:none;
+  margin-right: 10px;
+  margin-left: 5px;
+}
+
 
 </style>
 
@@ -145,27 +172,28 @@ if ($_SESSION['status'] == null) {?>
       <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding" onclick="document.getElementById('login').style.display='block'">Login</a>
 <?php } else {?>
     <a class="w3-bar-item w3-button w3-padding" style="color: grey;">Hello! <?php echo $_SESSION['username']; ?> </a>
-      <a class="w3-bar-item w3-button w3-padding" href="logout.php"> Logout </a>
+    <a class="w3-bar-item w3-button w3-padding" href="logout.php"> Logout </a>
 <?php }?>
     </p>
   </header>
 
 
+
   <div class="borderDiv" >
   <?php
-  if($response_status == "success"){ ?>
+if ($response_status == "success") {?>
     <div class="w3-panel w3-green w3-display-container w3-round w3-card-4">
     <span onclick="this.parentElement.style.display='none'" class="w3-button w3-large w3-display-topright">&times;</span>
       <h3>Success!</h3>
-      <p><?php echo $response_message.": ".$response_result; ?></p>
-    </div> 
-<?php  
-  }else if($response_status == "failed"){ ?>
+      <p><?php echo $response_message . ": " . $response_result; ?></p>
+    </div>
+<?php
+} else if ($response_status == "failed") {?>
     <div class="w3-panel w3-red w3-display-container w3-round w3-card-4">
     <span onclick="this.parentElement.style.display='none'" class="w3-button w3-large w3-display-topright">&times;</span>
       <h3>Failed!</h3>
-      <p><?php echo $response_message.": ".$response_result; ?></p>
-    </div> 
+      <p><?php echo $response_message . ": " . $response_result; ?></p>
+    </div>
 <?php }
 ?>
 <form action="qa_setting.php" method="post">
@@ -184,8 +212,23 @@ if ($_SESSION['status'] == null) {?>
             <div class="row">
               <div class="col-lg-3"></div>
               <div class="col-lg-8" align="right">
-                <label>Answer :</label> <br>
-                <input type="text"id="question" name="answer" placeholder="Enter the answer" style="display: block;" required><br>
+                <div id="questiongroup">
+                  <label>Answer Type :</label> <br>
+
+                <div id="answerparentdiv">
+                  <div class="input-group" id="answerdiv1">
+                  <input type="text" id="ans1" name="answer[]" style="margin-right: 50px;" placeholder="Enter the answer" style="display: block;" onchange="arrPrint()" required>
+                      <span class="input-group-btn">
+											<button class="btn btn-danger btn-remove" type="button">-</button>
+                      <button class="btn btn-success mx-2 btn-add" type="button">+</button>
+                      </span>
+                  </div>
+                </div>
+
+
+                </div>
+
+
                 <label>Question Type :</label> <br>
                 <select required name="qtype">
                   <option value="" disabled selected>Choose type of question</option>
@@ -196,9 +239,9 @@ if ($_SESSION['status'] == null) {?>
                 </select>
               </div>
             </div>
-            
+
             <div align="center" style="margin-bottom: 20px; margin-top: 10px">
-              <input type="submit" name="addQA" class="w3-button w3-border w3-round-large w3-green w3-hover-white" style="margin-right: 20px" value="Save">
+              <input id="smtBtn" type="submit" name="addQA" onclick="arrPrint();" class="w3-button w3-border w3-round-large w3-green w3-hover-white" style="margin-right: 20px" value="Save">
               <button class="w3-button w3-border w3-round-large w3-red w3-hover-white" >Clear</button>
             </div>
         </div>
@@ -272,11 +315,11 @@ if ($_SESSION['status'] == null) {?>
 </div>
 <?php }?>
 
+<!--
+<script src="js/qaSetting.js"></script> -->
 
-<script src="js/qaSetting.js"></script>
-
-
-<script>
+<script src="js/add_rm.js"></script>
+<script type="text/javascript">
 // Accordion
 function myAccFunc() {
     var x = document.getElementById("demoAcc");
@@ -299,6 +342,18 @@ function w3_close() {
     document.getElementById("mySidebar").style.display = "none";
     document.getElementById("myOverlay").style.display = "none";
 }
+
+function arrPrint() {
+       var idname = "ans";
+       var idno = 3;
+       var myString = "";
+       for(var i = 1; i <= idno; i++){
+         var docName = idname + i;
+         myString += document.getElementById(docName).value + ";";
+       }
+       console.log(myString);
+}
+
 
 </script>
 
