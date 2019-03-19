@@ -1,6 +1,12 @@
 <?php
+
+session_start();
+include "conn.php";
+
+$username = $_SESSION['username'];
+mysqli_set_charset($conn, "utf8");
+
 if(isset($_POST["sendMsg"])){
-  include("conn.php");
     $question = $_POST["question"];
     $answer = $_POST["answer"];
     $qtype = $_POST["qtype"];
@@ -23,7 +29,7 @@ if(isset($_POST["sendMsg"])){
     // );
 
   
-    $payload = json_encode($dataToSend);
+    // $payload = json_encode($dataToSend);
   
     // $ch = curl_init( $url );
     // curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
@@ -37,20 +43,39 @@ if(isset($_POST["sendMsg"])){
     // $response_result = $data_response['Result'];
     // curl_close($ch);
 
-    $ch = curl_init('https://njmessengerbot.herokuapp.com/test/?id=1868064243272013&option='.$str);
-    // $test1 = ;
-    // curl_setopt($ch, CURLOPT_URL, $payload);
-    // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    // curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-    $data = curl_exec($ch);
-    curl_close($ch);
-    $data_response = json_decode($data, true);
-    //echo $data;
-    $response_status = $data_response['Status'];
-    $response_message = $data_response['StatusMessage'];
-    $response_result = $data_response['Result'];
-    curl_close($ch);
+    // $chn = curl_init('https://njmessengerbot.herokuapp.com/test/?id=1868064243272013&option='.$str);
+    // // $test1 = ;
+    // // curl_setopt($ch, CURLOPT_URL, $payload);
+    // // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    // // curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    // $data = curl_exec($chn);
+    // // curl_close($ch);
+    // $data_response = json_decode($data, true);
+    // //echo $data;
+    // $response_status = $data_response['Status'];
+    // $response_message = $data_response['StatusMessage'];
+    // $response_result = $data_response['Result'];
+    // curl_close($chn);
   //  header("Refresh:0");
+
+// Get cURL resource
+$curl = curl_init();
+// Set some options - we are passing in a useragent too here
+curl_setopt_array($curl, [
+    CURLOPT_RETURNTRANSFER => 1,
+    CURLOPT_URL => 'https://njmessengerbot.herokuapp.com/test/?id=1868064243272013&option='.urlencode($str),
+    CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+]);
+// Send the request & save response to $resp
+$resp = curl_exec($curl);
+// Close request to clear up some resources
+curl_close($curl);
+
+echo $urls;  
+
+$resp = curl_exec($curl);
+// Close request to clear up some resources
+curl_close($curl);
   }
 ?>
 
