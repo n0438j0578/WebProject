@@ -1,4 +1,6 @@
 <?php
+error_reporting(0);
+ini_set('display_errors', 0);
 
 session_start();
 include "conn.php";
@@ -71,11 +73,7 @@ $resp = curl_exec($curl);
 // Close request to clear up some resources
 curl_close($curl);
 
-echo $urls;  
 
-$resp = curl_exec($curl);
-// Close request to clear up some resources
-curl_close($curl);
   }
 ?>
 
