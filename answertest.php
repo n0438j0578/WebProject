@@ -14,34 +14,34 @@ if(isset($_POST["sendMsg"])){
     echo  $query_insert;
   
     //POST TO http://35.198.240.228:20000/api/wordset
-    $url = 'http://35.198.240.228:20000/api/wordset';
+    // $url = 'http://35.198.240.228:20000/api/wordset';
   
-    $dataToSend = array(
-      'text' => $question,
-      'type' => $qtype,
-      'answer' => $str
-    );
+    // $dataToSend = array(
+    //   'text' => $question,
+    //   'type' => $qtype,
+    //   'answer' => $str
+    // );
 
   
     $payload = json_encode($dataToSend);
   
-    $ch = curl_init( $url );
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($ch);
+    // $ch = curl_init( $url );
+    // curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+    // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+    // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    // $response = curl_exec($ch);
   
-    $data_response = json_decode($response, true);
-    $response_status = $data_response['Status'];
-    $response_message = $data_response['StatusMessage'];
-    $response_result = $data_response['Result'];
-    curl_close($ch);
+    // $data_response = json_decode($response, true);
+    // $response_status = $data_response['Status'];
+    // $response_message = $data_response['StatusMessage'];
+    // $response_result = $data_response['Result'];
+    // curl_close($ch);
 
-    $ch = curl_init();
-    $test1 = 'https://njmessengerbot.herokuapp.com/test/?id=1868064243272013&option='.$str;
-    curl_setopt($ch, CURLOPT_URL, test1);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    $ch = curl_init('https://njmessengerbot.herokuapp.com/test/?id=1868064243272013&option='.$str);
+    // $test1 = ;
+    // curl_setopt($ch, CURLOPT_URL, $payload);
+    // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    // curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
     $data = curl_exec($ch);
     curl_close($ch);
     $data_response = json_decode($data, true);
@@ -49,6 +49,7 @@ if(isset($_POST["sendMsg"])){
     $response_status = $data_response['Status'];
     $response_message = $data_response['StatusMessage'];
     $response_result = $data_response['Result'];
+    curl_close($ch);
   //  header("Refresh:0");
   }
 ?>
