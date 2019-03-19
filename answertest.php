@@ -1,12 +1,17 @@
 <?php
 if(isset($_POST["sendMsg"])){
+  include("conn.php");
     $question = $_POST["question"];
     $answer = $_POST["answer"];
     $qtype = $_POST["qtype"];
     $id = $_POST['id'];
   
-    $str = "";
-  
+    $str =  $answer;
+
+    $sql = "UPDATE oldmsg SET status=1 WHERE id=".$id;
+    $query_insert = mysqli_query($conn, $sql);
+
+    echo  $query_insert;
   
     //POST TO http://35.198.240.228:20000/api/wordset
     $url = 'http://35.198.240.228:20000/api/wordset';
@@ -33,9 +38,8 @@ if(isset($_POST["sendMsg"])){
     curl_close($ch);
 
     $ch = curl_init();
-    $test = urlencode($answer);
-    $test1 = rawurldecode('https://njmessengerbot.herokuapp.com/test/?id=1868064243272013&option=');
-    curl_setopt($ch, CURLOPT_URL, $test1.rawurldecode($test) );
+    $test1 = 'https://njmessengerbot.herokuapp.com/test/?id=1868064243272013&option='.$str;
+    curl_setopt($ch, CURLOPT_URL, test1);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
     $data = curl_exec($ch);
@@ -45,7 +49,7 @@ if(isset($_POST["sendMsg"])){
     $response_status = $data_response['Status'];
     $response_message = $data_response['StatusMessage'];
     $response_result = $data_response['Result'];
-    header("Refresh:0");
+  //  header("Refresh:0");
   }
 ?>
 
@@ -243,7 +247,7 @@ for ($x = 0; $x < sizeof($response_result) ; $x++) {?>
             </div>
 
             <div align="center" style="margin-bottom: 20px; margin-top: 10px">
-            <input type="text" value = "<?php echo $response_result[$x]['id']; ?>" name ="id">
+            <input type="text" value = "<?php echo strval($response_result[$x]['id']); ?>" name ="id">
               <input id="smtBtn" type="submit" name="sendMsg"  class="w3-button w3-border w3-round-large w3-green w3-hover-white" style="margin-right: 20px" value="Send">
               <button class="w3-button w3-border w3-round-large w3-red w3-hover-white" >Clear</button>
             </div>
