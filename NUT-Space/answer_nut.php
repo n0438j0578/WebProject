@@ -33,7 +33,8 @@ if(isset($_POST["addQA"])){
 // Set some options - we are passing in a useragent too here
     curl_setopt_array($curl, [
         CURLOPT_RETURNTRANSFER => 1,
-        CURLOPT_URL => 'https://njmessengerbot.herokuapp.com/test/?id=1868064243272013&option='.urlencode($str),
+        //CURLOPT_URL => 'https://njmessengerbot.herokuapp.com/test/?id=1868064243272013&option='.urlencode($str),
+        CURLOPT_URL => 'https://njmessengerbot.herokuapp.com/test/?id='.urlencode($id).'&option='.urlencode($str),
         CURLOPT_USERAGENT => 'Codular Sample cURL Request'
     ]); 
 // Send the request & save response to $resp
@@ -258,7 +259,7 @@ th, td {
             <!-----------------------------------------------Blocks begin-------------------------------------------------------------------------->
             
             <div class="col-lg-12>">
-            <form action="answer_nut.php" method="post">
+        
 
             <?php 
                 $jquery_string = "";
@@ -310,6 +311,7 @@ th, td {
 
             ?>
             <!------------------------------------------------- Main Div ------------------------------------------------------------------------->            
+            <form action="answer_nut.php" method="post">
                 <div id="mainDiv<?php echo $msg_array['id']; ?>" class="borderDiv" align="center" data-down="collapse" data-target="#wrapDiv<?php echo $msg_array['id']; ?>" >
                     <div class="row" style="margin-top: 20px">
                         <div class="col-lg-2">
