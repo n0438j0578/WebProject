@@ -11,53 +11,18 @@ mysqli_set_charset($conn, "utf8");
 
 $query_msg = mysqli_query($conn, 'SELECT * FROM oldmsg WHERE status = 0');
 
+
+$submit_id = "";
+
 // PRESS THE addQA BTN
 if(isset($_POST["addQA"])){
-  $question = $_POST["question"];
-  $answer = $_POST["answer"];
-//   $qtype = $_POST["qtype"];
-  $id = $_POST['id'];
+// if(isset($_POST[$submit_id])){
+    $question = $_POST["question"];
+    $answer = $_POST["answer"];
+    $qtype = $_POST["qtype"];
+    $id = $_POST['id'];
 
-  $str = "";
-/* ---------------------------------- Old ------------------------------
-  foreach ($answer as $index => $value) {
-    // $str = $str.$answer[$index].":;";
-    $str = $str.$answer[$index].":;";
-  }
-
-  //POST TO http://35.198.240.228:20000/api/wordset
-  $url = 'http://35.198.240.228:20000/api/wordset';
-
-  $dataToSend = array(
-    'text' => $question,
-    'type' => $qtype,
-    'answer' => $str
-  );
-  
-
-  $payload = json_encode($dataToSend);
-
-  $ch = curl_init( $url );
-  curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-  curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  $response = curl_exec($ch);
-
-  $data_response = json_decode($response, true);
-  $response_status = $data_response['Status'];
-  $response_message = $data_response['StatusMessage'];
-  $response_result = $data_response['Result'];
-
-}
-
--------------------------------------------------------------------------*/
-
-// if(isset($_POST["sendMsg"])){
-//     $question = $_POST["question"];
-//     $answer = $_POST["answer"];
-//     $qtype = $_POST["qtype"];
-//     $id = $_POST['id'];
-  
+    $str = "";
     $str =  $answer;
 
     $sql = "UPDATE oldmsg SET status=1 WHERE id=".$id;
@@ -77,8 +42,56 @@ if(isset($_POST["addQA"])){
     curl_close($curl);
 
 
-  } 
+    /* ---------------------------------- Old ------------------------------*/
+    $str2 = "";
 
+    echo $answer;
+
+  foreach ($answer as $index => $value) {
+    // $str = $str.$answer[$index].":;";
+    $str2 = $str2.$answer[$index].":;";
+  }
+
+  echo $str2;
+
+  //POST TO http://35.198.240.228:20000/api/wordset
+   $url = 'http://35.198.240.228:20000/api/wordset';
+
+
+  $dataToSend = array(
+    'text' => $question,
+    'type' => $qtype,
+    'answer' => $str2
+  );
+  
+
+  $payload = json_encode($dataToSend);
+
+  $ch = curl_init( $url );
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  $response = curl_exec($ch);
+
+  $data_response = json_decode($response, true);
+  $response_status = $data_response['Status'];
+  $response_message = $data_response['StatusMessage'];
+  $response_result = $data_response['Result'];
+
+  header("Location: answer_nut.php"); /* Redirect browser */
+
+}
+
+/*-------------------------------------------------------------------------
+
+// if(isset($_POST["sendMsg"])){
+//     $question = $_POST["question"];
+//     $answer = $_POST["answer"];
+//     $qtype = $_POST["qtype"];
+//     $id = $_POST['id'];
+*/
+
+    
 
 ?>
 
@@ -110,7 +123,7 @@ if(isset($_POST["addQA"])){
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 
-    <script src="../js/add_rm.js"></script>
+    <script src="../js/add_rm.js" type="text/javascript"></script>
 </head>
 
 <style>
@@ -185,10 +198,10 @@ th, td {
     <nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
         <div class="w3-container w3-display-container w3-padding-16">
             <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
-            <h3 class="w3-wide"><a href="/WebProject/index.php" style="text-decoration: none; hover:none;"><b>NJ Network Devices</b></a></h3>
+            <h3 class="w3-wide"><a href="../index.php" style="text-decoration: none; hover:none;"><b>NJ Network Devices</b></a></h3>
         </div>
         <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
-            <a href="/WebProject/index.php" class="w3-bar-item w3-button"> Home </a>
+            <a href="../index.php" class="w3-bar-item w3-button"> Home </a>
         </div>
 
 
@@ -248,7 +261,11 @@ th, td {
             <form action="answer_nut.php" method="post">
 
             <?php 
-            $jquery_string = "";
+                $jquery_string = "";
+                $jquery_string2 = "";
+            //  $jquery_string3 = "";
+        
+
                 while($msg_array = mysqli_fetch_array($query_msg)){ 
                     
                     $temp = '$("body").on("click", "#mainDiv'.$msg_array['id'].'", 
@@ -257,6 +274,40 @@ th, td {
                     })
                     ';
                     $jquery_string = $jquery_string.$temp;
+
+
+                    $submit_btn = '$("#smtBtn'.$msg_array['id'].'").click(function(){
+                            let question = document.getElementById("question").val();
+                            alert(json);
+                    })
+                    ';
+                    $jquery_string2 = $jquery_string2.$submit_btn;
+
+                    $submit_id = "smtBtn".$msg_array['id'];
+
+
+                    // $rmbtn = '$("body").on("click", ".btn-remove", function(e){
+		
+                    //     if($(this).closest("div").is(":last-child")){
+                    //         $(this).closest("div").prev().find(".btn-add").show();
+                    //     }
+                        
+                    //     let amountanswer = $("#answerparentdiv").children().length;
+                
+                    //     if(amountanswer-1 == 1){
+                    //         $(this).closest("div").prev().find(".btn-remove").hide();
+                    //     }
+                
+                    //     if(amountanswer > 1) {
+                    //         $(this).closest("div").remove();
+                    //     }
+                
+                    // })
+                    // ';
+                    // $jquery_string3 = $jquery_string3.$rmbtn;
+
+                    
+
             ?>
             <!------------------------------------------------- Main Div ------------------------------------------------------------------------->            
                 <div id="mainDiv<?php echo $msg_array['id']; ?>" class="borderDiv" align="center" data-down="collapse" data-target="#wrapDiv<?php echo $msg_array['id']; ?>" >
@@ -299,19 +350,20 @@ th, td {
                         <input type="hidden" name="id" value="<?php echo $msg_array['id']; ?>">
 
 
-                        <!-- <label>Question Type :</label> <br>
+                        <label>Question Type :</label> <br>
                         <select required name="qtype">
                             <option value="" disabled selected>Choose type of question</option>
                             <option value="greeting">Greeting</option>
                             <option value="order">Order</option>
                             <option value="problem">Problem</option>
                             <option value="search">Search</option>
-                        </select> -->
+                        </select>
                     </div>
                 </div>
 
             <div align="center" style="margin-bottom: 20px; margin-top: 10px">
-              <input id="smtBtn" type="submit" name="addQA" onclick="arrPrint();" class="w3-button w3-border w3-round-large w3-green w3-hover-white" style="margin-right: 20px" value="Save">
+            <input id="smtBtn<?php echo $msg_array['id']; ?>" type="submit" name="addQA" onclick="arrPrint();" class="w3-button w3-border w3-round-large w3-green w3-hover-white" style="margin-right: 20px" value="Save">
+              <!-- <input id="<?php echo $submit_id ?>" type="submit" name="<?php echo $submit_id ?>" onclick="arrPrint();" class="w3-button w3-border w3-round-large w3-green w3-hover-white" style="margin-right: 20px" value="Save">               -->
               <button class="w3-button w3-border w3-round-large w3-red w3-hover-white" >Clear</button>
             </div>
         
@@ -453,7 +505,13 @@ th, td {
             console.log(myString);
         }
         
-         <?php echo $jquery_string; ?>
+        <?php 
+            echo $jquery_string;
+            echo $jquery_string2; 
+       
+         
+        ?>
+         
 
     </script>
 

@@ -42,9 +42,9 @@ $(function(){
 		})
 	})
 
-	// $("#question").input(function(e){
-	// 	alert("cddfsf")
-	// })
+	$("#question").input(function(e){
+		alert("cddfsf")
+	})
 
 
 	$("#smtBtn").click(function(){
