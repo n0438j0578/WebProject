@@ -62,7 +62,8 @@ if(isset($_POST["addQA"])){
   $dataToSend = array(
     'text' => $question,
     'type' => $qtype,
-    'answer' => $str2
+    // 'answer' => $str2
+    'answer' => $answer
   );
   
 
@@ -339,12 +340,13 @@ th, td {
                                     <label>Answer:</label> <br>
 
                             <div id="answerparentdiv" class="answerparentdiv">
+                            <input type="text" id="ans1" name="answer" placeholder="Enter the answer" style="display: inline;" onchange="arrPrint()" required>
                                 <div class="input-group" id="answerdiv1">
-                                    <input type="text" id="ans1" name="answer" placeholder="Enter the answer" style="display: block;" onchange="arrPrint()" required>
-                                    <span class="input-group-btn">
+                                    
+                                    <!-- <span class="input-group-btn">
 											<button class="btn btn-danger btn-remove" type="button">-</button>
                                             <button class="btn btn-success mx-2 btn-add" type="button">+</button>
-                                    </span>
+                                    </span> -->
                                 </div>
                             </div>
                         </div>
