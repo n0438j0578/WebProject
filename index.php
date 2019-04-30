@@ -104,11 +104,15 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
 
   <!-- Product grid -->
-  <div class="w3-row-padding">
   
+  <div class="w3-row-padding">    
   <?php
+    $round_count = 0;
     while($array_food = mysqli_fetch_array($query_food)){
-      $id = $array_food['id']; ?>
+      $id = $array_food['id']; 
+       if($round_count == 3){ ?>
+        <div class="w3-row-padding">
+       <?php $round_count = 0; } ?>
       <div class="w3-third w3-container">
       <div class="w3-display-container">
         <img src="<?php echo $array_food['img']; ?>" style="width:100%; heigh:100%">
@@ -135,7 +139,9 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
         <?php } ?>  </div>
         <p><a href="product_detail.php/?idq=<?php echo $id; ?>" style="text-decoration: none"><?php echo $array_food['name']; ?></a><br><b><?php echo $array_food['price']; ?> Baht.</b><br><?php echo $array_food['amount']; ?> available.</p>
       </div>
-<?php    }
+<?php 
+    $round_count++;
+    }
   ?>
   </div>
     
