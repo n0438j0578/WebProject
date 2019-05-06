@@ -1,4 +1,5 @@
 <?php
+
 	include("conn.php");
 
 	$id = $_REQUEST['id'];
@@ -6,7 +7,6 @@
 	$price = $_REQUEST['price'];
 	$des = $_REQUEST['itemDes'];
 	$amount = $_REQUEST['amount'];
-
 
 	// Update item
 	$sql_update = 'UPDATE `menu` SET `name`= "'.$name.'",`price`= "'.$price.'",`des`= "'.$des.'",`amount`= "'.$amount.'" WHERE ID = "'.$id.'";';
@@ -19,4 +19,5 @@
 		echo '<script> alert("Uptate item successfully!");
 		window.location.replace("index.php"); </script>';
 	}
+	
 ?>
