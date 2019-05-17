@@ -4,7 +4,9 @@
 	 //$host = "localhost";
 	 $user = "root";
 	 //$pass = "qwer1234";
-	 $pass = "P@ssword";
+	 //$pass = "P@ssword";
+
+	 $pass = "n0438@j0578";
 	 //$pass = "";
 	 $db = "N&N_Cafe";
 
