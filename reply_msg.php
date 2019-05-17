@@ -81,7 +81,7 @@
         $response_message = $data_response['StatusMessage'];
         $response_result = $data_response['Result'];
 
-        header("Location: answer_nut.php"); /* Redirect browser */
+        header("Location: reply_msg.php"); /* Redirect browser */
 
     }
 
