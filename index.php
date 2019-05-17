@@ -129,6 +129,7 @@
                             <button class="w3-button w3-black" onclick="document.getElementById('<?php echo $id; ?>').style.display='block'">Edit</button>
                             <form method="POST" action="remove.php">
                                 <input type="hidden" value="<?php echo $id; ?>" name="id">
+                                <input type="hidden" value="<?php echo $array_food['img']; ?>" name="image">
                                 <input type="submit" value="Remove" class="w3-button w3-black">
                             </form>
                         </div>
