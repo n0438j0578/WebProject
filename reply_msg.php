@@ -81,7 +81,7 @@
         $response_message = $data_response['StatusMessage'];
         $response_result = $data_response['Result'];
 
-        header("Location: answer_nut.php"); /* Redirect browser */
+        header("Location: reply_msg.php"); /* Redirect browser */
 
     }
 
@@ -326,7 +326,7 @@ th, td {
 
             ?>
             <!------------------------------------------------- Main Div ------------------------------------------------------------------------->            
-            <form action="answer_nut.php" method="post">
+            <form action="reply_msg.php" method="post">
                 <div id="mainDiv<?php echo $msg_array['id']; ?>" class="borderDiv" align="center" data-down="collapse" data-target="#wrapDiv<?php echo $msg_array['id']; ?>" >
                     <div class="row" style="margin-top: 20px">
                         <div class="col-lg-2">
