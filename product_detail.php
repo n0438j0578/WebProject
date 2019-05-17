@@ -124,7 +124,7 @@
         <!-- Product grid -->
         <div class="w3-row-padding">
             <h4> <?php echo $pName ?> </h4>
-            <img src="/WebProject<?php echo $details['img']; ?>" style="width:50%; heigh:50%">
+            <img src="<?php echo $details['img']; ?>" style="width:50%; heigh:50%">
             <br>
             <br>
             <div class="container">
