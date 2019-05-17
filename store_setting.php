@@ -11,7 +11,7 @@
     $filename = $_FILES['storeImage']['name'];
     
     if ($_FILES['storeImage']['name'] != "" ) {
-        if(!move_uploaded_file($_FILES["storeImage"]["tmp_name"], "./bank/".$_FILES['storeImage']['name']))
+        if(!move_uploaded_file($_FILES["storeImage"]["tmp_name"], "./bank/bank_pic.jpg"))
         die( "Upload error with code ".$_FILES["storeImage"]["error"]);
     }else {die("You did not specify an input file or file excedd form");}
 
@@ -194,7 +194,7 @@ th, td {
                     <div class="col-lg-6" style="margin-top: 10px">
                         <label style="display: inline; text-align: top; font-size:13px;">Store Name :</label>
                         <br>
-                        <input type="text" name="storeName" placeholder="Enter your store name" style="display: block;" required>
+                        <input type="text" name="storeName" placeholder="Enter your store name" value='<?php echo $store_name_banner ?>' style="display: block;" required>
                         <br>
                         <label style="display: inline; text-align: top; font-size:13px;">Bank image :</label>
                         <br>
