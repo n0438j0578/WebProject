@@ -73,11 +73,11 @@
             <a href="/WebProject/index.php" class="w3-bar-item w3-button"> Home </a>
             <br>
             <?php if ($_SESSION[ 'status']=='admin' ) {?>
-            <a href="qa_setting.php" class="w3-bar-item w3-button">Q/A Setting</a>
+            <a href="../qa_setting.php" class="w3-bar-item w3-button">Q/A Setting</a>
             <br>
-            <a href="reply_msg.php" class="w3-bar-item w3-button">Reply Messages</a>
+            <a href="../reply_msg.php" class="w3-bar-item w3-button">Reply Messages</a>
             <br>
-            <a href="store_setting.php" class="w3-bar-item w3-button">Store Setting</a>
+            <a href="../store_setting.php" class="w3-bar-item w3-button">Store Setting</a>
             <br>
             <?php } ?>
         </div>
