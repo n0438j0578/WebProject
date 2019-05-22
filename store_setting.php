@@ -137,7 +137,7 @@ th, td {
             <br>
             <a href="reply_msg.php" class="w3-bar-item w3-button">Reply Messages</a>
             <br>
-            <a href="seeQa.php" class="w3-bar-item w3-button">See Q/A</a>
+            <a href="seeQA.php" class="w3-bar-item w3-button">See Q/A</a>
             <br>
             <?php } ?>
         </div>

@@ -73,7 +73,7 @@
             <br>
             <a href="store_setting.php" class="w3-bar-item w3-button">Store Setting</a>
             <br>
-            <a href="seeQa.php" class="w3-bar-item w3-button">See Q/A</a>
+            <a href="seeQA.php" class="w3-bar-item w3-button">See Q/A</a>
             <br>
             <?php } ?>
         </div>
