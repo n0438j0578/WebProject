@@ -1,50 +1,45 @@
 <?php
-  //v3
-  error_reporting(0);
-  ini_set('display_errors', 0);
+  //error_reporting(0);
+  //ini_set('display_errors', 0);
   session_start();
-  include ("conn.php");
+  include("conn.php");
   include("store_info.php");
 
-  $username = $_SESSION['username'];
-  mysqli_set_charset($conn, "utf8");
+  if(isset($_POST["delBtn"])){
 
-  // PRESS THE addQA BTN
-  if(isset($_POST["addQA"])){
-    $question = $_POST["question"];
-    $answer = $_POST["answer"];
-    $qtype = $_POST["qtype"];
+    $id = $_REQUEST['id'];
+    $sqldelete = 'DELETE FROM `collections` WHERE ID = "'.$id.'";';
+    if($query = mysqli_query($conn, $sqldelete)){
+        echo "<script type='text/javascript'>alert('Delete Success!');</script>";
+        header("Location: seeQA.php");
+	}else{
+		echo '<script> alert("Delete Failed!); </script>';
+	}
+      
+    // $store_name = $_POST['storeName'];
+    // $filename = $_FILES['storeImage']['name'];
+    
+    // if ($_FILES['storeImage']['name'] != "" ) {
+    //     if(!move_uploaded_file($_FILES["storeImage"]["tmp_name"], "./bank/bank_pic.jpg"))
+    //     die( "Upload error with code ".$_FILES["storeImage"]["error"]);
+    // }else {die("You did not specify an input file or file excedd form");}
 
-    $str = "";
-
-    foreach ($answer as $index => $value) {
-      // $str = $str.$answer[$index].":;";
-      $str = $str.$answer[$index].":;";
-    }
-
-    //POST TO http://35.198.240.228:20000/api/wordset
-    $url = 'http://35.198.240.228:20000/api/wordset';
-
-    $dataToSend = array(
-      'text' => $question,
-      'type' => $qtype,
-      'answer' => $str
-    );
-  
-
-    $payload = json_encode($dataToSend);
-
-    $ch = curl_init( $url );
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($ch);
-
-    $data_response = json_decode($response, true);
-    $response_status = $data_response['Status'];
-    $response_message = $data_response['StatusMessage'];
-    $response_result = $data_response['Result'];
+    // $bank_path = "./bank/".$filename."";
+    // $update_query_string = "UPDATE store_info SET store_name='".$store_name."', bank_path= '".$bank_path."'";
+    // $update_insert = mysqli_query($conn, $update_query_string);
+    // if (!$update_insert) {
+    //     printf("Error: %s\n", mysqli_error($conn));
+    //     exit();
+    // }else{
+    //     echo '<script type="text/javascript">alert("Success!");</script>';
+    //     //header("Location: store_setting.php");
+    //     //exit();
+    // }
   }
+
+  $query_qa_string = "SELECT * FROM collections WHERE types='problem' OR types='greeting'";
+  $qa_arr = mysqli_query($conn, $query_qa_string);
+
 ?>
 
 <!DOCTYPE html>
@@ -52,7 +47,7 @@
 <html>
 
 <head>
-    <title>Q/A Setting</title>
+    <title>Store Setting</title>
     <meta charset="UTF-8">
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -150,9 +145,9 @@ th, td {
             <a href="/WebProject/index.php" class="w3-bar-item w3-button"> Home </a>
             <br>
             <?php if ($_SESSION[ 'status']=='admin' ) {?>
-            <a href="reply_msg.php" class="w3-bar-item w3-button">Reply Messages</a>
+            <a href="qa_setting.php" class="w3-bar-item w3-button">Q/A Setting</a>
             <br>
-            <a href="store_setting.php" class="w3-bar-item w3-button">Store Setting</a>
+            <a href="reply_msg.php" class="w3-bar-item w3-button">Reply Messages</a>
             <br>
             <?php } ?>
         </div>
@@ -185,7 +180,7 @@ th, td {
                 <?php }?>
                 <i class="fa fa-search w3-button" onclick="document.getElementById('search').style.display='block'"></i>
 
-                <?php if ($_SESSION[ 'status']==null) {?>
+                <?php if ($_SESSION['status']==null) {?>
                 <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding" onclick="document.getElementById('login').style.display='block'">Login</a>
                 <?php } else {?>
                 <a class="w3-bar-item w3-button w3-padding" style="color: grey;">Hello! <?php echo $_SESSION['username']; ?> </a>
@@ -199,83 +194,71 @@ th, td {
         </header>
 
 
-
+        <?php while($qa = mysqli_fetch_array($qa_arr)){?>
+    <div class="col-lg-12>">
         <div class="borderDiv">
-            <?php if ($response_status=="success" ) {?>
-            <div class="w3-panel w3-green w3-display-container w3-round w3-card-4">
-                <span onclick="this.parentElement.style.display='none'" class="w3-button w3-large w3-display-topright">&times;</span>
-                <h3>Success!</h3>
-                <p>
-                    <?php echo $response_message . ": " . $response_result; ?>
-                </p>
-            </div>
-            <?php } else if ($response_status=="failed" ) {?>
-            <div class="w3-panel w3-red w3-display-container w3-round w3-card-4">
-                <span onclick="this.parentElement.style.display='none'" class="w3-button w3-large w3-display-topright">&times;</span>
-                <h3>Failed!</h3>
-                <p>
-                    <?php echo $response_message . ": " . $response_result; ?>
-                </p>
-            </div>
-            <?php } ?>
-            <form action="qa_setting.php" method="post">
+        
+            <form action="seeQA.php" method="post">
                 <div>
                     <div class="row" style="margin-top: 20px">
                         <div class="col-lg-2">
                             <img src="icon\client.png" alt="Userpic" height="100" width="100" style="margin-left: 50px;">
                         </div>
 
-                        <div class="col-lg-5" style="margin-top: 10px">
+                        <div class="col-lg-9" style="margin-top: 10px" align="left">
                             <label style="display: inline; text-align: top;">Question:</label>
                             <br>
-                            <input type="text" id="question" name="question" placeholder="Enter the question" style="display: block;" required>
+                            <input type="text" id="question" name="question" placeholder="Enter the question" style="display: block;" value='<?php echo $qa['message']; ?>' required>
                         </div>
                     </div>
-
+            
                     <div class="row">
-                        <div class="col-lg-3"></div>
-                        <div class="col-lg-8" align="right">
-                            <div id="questiongroup">
-                                <label>Answer:</label>
-                                <br>
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-9" align="right">
+                        <div id="questiongroup">
+                                    <label>Answer:</label> <br>
+                                <?php 
+                                
+                                $arr = explode(":;",$qa['answer']);
+                                $ans_len = count($arr)-1;
 
-                                <div id="answerparentdiv">
-                                    <div class="input-group" id="answerdiv1">
-                                        <input type="text" id="ans1" name="answer[]" style="margin-right: 50px;" placeholder="Enter the answer" style="display: block;" onchange="arrPrint()" required>
-                                        <span class="input-group-btn">
-											<button class="btn btn-danger btn-remove" type="button">-</button>
-                      <button class="btn btn-success mx-2 btn-add" type="button">+</button>
-                      </span>
-                                    </div>
-                                </div>
+                                for($i = 0; $i < $ans_len; $i++){
+                            
+                                ?>
 
-
+                            <div id="answerparentdiv" class="answerparentdiv">
+                            <input type="text" id="delBtn" name="delBtn" placeholder="Enter the answer" style="display: inline;" onchange="arrPrint()" value='<?php echo $arr[$i]; ?>' required>
+                                <!-- <div class="input-group" id="answerdiv1">
+                                    
+                                </div> -->
                             </div>
+                                <?php }?>
+                        </div>
 
-
-                            <label>Question Type :</label>
-                            <br>
-                            <select required name="qtype">
-                                <option value="" disabled selected>Choose type of question</option>
-                                <option value="greeting">Greeting</option>
-                                <option value="order">Order</option>
-                                <option value="problem">Problem</option>
-                                <option value="search">Search</option>
-                            </select>
                         </div>
                     </div>
-
+          
                     <div align="center" style="margin-bottom: 20px; margin-top: 10px">
-                        <input id="smtBtn" type="submit" name="addQA" onclick="arrPrint();" class="w3-button w3-border w3-round-large w3-green w3-hover-white" style="margin-right: 20px" value="Save">
-                        <button class="w3-button w3-border w3-round-large w3-red w3-hover-white">Clear</button>
+                        <input id="smtBtn" type="submit" name="addQA" onclick="arrPrint();" class="w3-button w3-border w3-round-large w3-red w3-hover-white" style="margin-right: 20px" value="Delete">
+                        <!-- <button class="w3-button w3-border w3-round-large w3-red w3-hover-white">Clear</button> -->
                     </div>
+
+                    <input type="hidden" name="id" value="<?php echo $qa['id']; ?>">
                 </div>
             </form>
         </div>
 
+        
+                
+            </form>
+        </div>
+        <br>
 
+        <?php } ?>
+    </div>
 
         <div class="w3-black w3-center w3-padding-24" style="margin-top: 100px"> ยินดีต้อนรับสู่ร้าน <?php echo $store_name_banner ?> </div>
+        
 
         <!-- End page content -->
     </div>
@@ -359,7 +342,6 @@ th, td {
     <!--
 <script src="js/qaSetting.js"></script> -->
 
-    <script src="js/add_rm.js"></script>
     <script type="text/javascript">
         // Accordion
         function myAccFunc() {
@@ -384,16 +366,6 @@ th, td {
             document.getElementById("myOverlay").style.display = "none";
         }
 
-        function arrPrint() {
-            var idname = "ans";
-            var idno = 3;
-            var myString = "";
-            for (var i = 1; i <= idno; i++) {
-                var docName = idname + i;
-                myString += document.getElementById(docName).value + ";";
-            }
-            console.log(myString);
-        }
     </script>
 
 </body>

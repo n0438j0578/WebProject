@@ -342,8 +342,8 @@ th, td {
 
             <!------------------------------------------------- Wrap Div ------------------------------------------------------------------------->
 
-                        <div id="wrapDiv<?php echo $msg_array['id']; ?>"  style="display: none;">
-                        <div class="container">
+                <div id="wrapDiv<?php echo $msg_array['id']; ?>"  style="display: none;">
+                    <div class="container">
         
                             
 
