@@ -210,7 +210,7 @@ th, td {
                         <div class="col-lg-9" style="margin-top: 10px" align="left">
                             <label style="display: inline; text-align: top;">Question:</label>
                             <br>
-                            <input type="text" id="question" name="question" placeholder="Enter the question" style="display: block;" value='<?php echo $qa['message']; ?>' required>
+                            <input type="text" readonly="true" id="question" name="question" placeholder="Enter the question" style="display: block;" value='<?php echo $qa['message']; ?>' required>
                         </div>
                     </div>
             
@@ -229,7 +229,7 @@ th, td {
                                 ?>
 
                             <div id="answerparentdiv" class="answerparentdiv">
-                            <input type="text" id="delBtn" name="delBtn" placeholder="Enter the answer" style="display: inline;" onchange="arrPrint()" value='<?php echo $arr[$i]; ?>' required>
+                            <input type="text" readonly="true" id="delBtn" name="delBtn" placeholder="Enter the answer" style="display: inline;" onchange="arrPrint()" value='<?php echo $arr[$i]; ?>' required>
                                 <!-- <div class="input-group" id="answerdiv1">
                                     
                                 </div> -->
