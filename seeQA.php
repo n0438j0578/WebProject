@@ -149,6 +149,8 @@ th, td {
             <br>
             <a href="reply_msg.php" class="w3-bar-item w3-button">Reply Messages</a>
             <br>
+            <a href="store_setting.php" class="w3-bar-item w3-button">Store Setting</a>
+            <br>
             <?php } ?>
         </div>
 
