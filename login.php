@@ -4,7 +4,10 @@
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $login_query_string = "SELECT * FROM users WHERE username = '".$username."' AND password = ".$password.";";
+    $pass_sha512 = hash("sha512", $password);
+    echo $pass_sha512;
+
+    $login_query_string = "SELECT * FROM users WHERE username = '".$username."' AND password = '".$pass_sha512."';";
     $query_login = mysqli_query($conn, $login_query_string);
     if (!$query_login) {
         printf("Error: %s\n", mysqli_error($conn));
