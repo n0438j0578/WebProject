@@ -155,7 +155,7 @@
                         </a>
                         <br><b>ราคา : <?php echo $array_food['price']; ?> </b>
                         <br>
-                        <?php echo $array_food[ 'amount']; ?> available.</p>
+                        <b>จำนวนคงเหลือ :</b><?php echo $array_food[ 'amount']; ?></p>
                 </div>
                 <?php $round_count++; } ?>
             </div>

@@ -130,23 +130,23 @@
             <br>
             <br>
             <div class="container">
-                <h6><b>Description:</b></h6>
+                <h6><b>รายละเอียดสินค้า :</b></h6>
                 <p>
                     <?php echo $details[ 'des']; ?>
                 </p>
                 <table>
                     <tr>
-                        <td><b>Available: </b>
+                        <td><b>จำนวนคงเหลือ : </b>
                         </td>
                         <td>
-                            <?php echo $details[ 'amount']; ?> items.</td>
+                            <?php echo $details[ 'amount']; ?> ชิ้น</td>
                     </tr>
 
                     <tr>
-                        <td><b>Price: </b>
+                        <td><b>ราคา : </b>
                         </td>
                         <td>
-                            <?php echo $details[ 'price']; ?> Baht.</td>
+                            <?php echo $details[ 'price']; ?> บาท</td>
                     </tr>
 
 
