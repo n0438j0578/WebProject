@@ -5,7 +5,7 @@
     $password = $_POST['password'];
 
     $pass_sha512 = hash("sha512", $password);
-    echo $pass_sha512;
+    //echo $pass_sha512;
 
     $login_query_string = "SELECT * FROM users WHERE username = '".$username."' AND password = '".$pass_sha512."';";
     $query_login = mysqli_query($conn, $login_query_string);
