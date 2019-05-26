@@ -153,9 +153,9 @@
                         <a href="product_detail.php/?idq=<?php echo $id; ?>" style="text-decoration: none">
                             <b>ชื่อสินค้า : </b><?php echo $array_food[ 'name']; ?>
                         </a>
-                        <br><b>ราคา : <?php echo $array_food['price']; ?> </b>
+                        <br><b>ราคา :</b> <?php echo $array_food['price']; ?> 
                         <br>
-                        <b>จำนวนคงเหลือ :</b><?php echo $array_food[ 'amount']; ?></p>
+                        <b>จำนวนคงเหลือ : </b><?php echo $array_food[ 'amount']; ?></p>
                 </div>
                 <?php $round_count++; } ?>
             </div>
