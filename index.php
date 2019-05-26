@@ -149,10 +149,11 @@
 
                         <?php } ?> </div>
                     <p>
+                        <b>รหัสสินค้า : <?php echo $array_food['id']; ?> </b><br>
                         <a href="product_detail.php/?idq=<?php echo $id; ?>" style="text-decoration: none">
-                            <?php echo $array_food[ 'name']; ?>
+                            <b>ชื่อสินค้า : </b><?php echo $array_food[ 'name']; ?>
                         </a>
-                        <br><b><?php echo $array_food['price']; ?> Baht.</b>
+                        <br><b>ราคา : <?php echo $array_food['price']; ?> </b>
                         <br>
                         <?php echo $array_food[ 'amount']; ?> available.</p>
                 </div>
