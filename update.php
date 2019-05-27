@@ -9,7 +9,7 @@
 	$amount = $_REQUEST['amount'];
 
 	// Update item
-	$sql_update = 'UPDATE `menu` SET `name`= "'.$name.'",`price`= "'.$price.'",`des`= "'.$des.'",`amount`= "'.$amount.'" WHERE ID = "'.$id.'";';
+	$sql_update = 'UPDATE `product` SET `name`= "'.$name.'",`price`= "'.$price.'",`des`= "'.$des.'",`amount`= "'.$amount.'" WHERE ID = "'.$id.'";';
 	$query = mysqli_query($conn, $sql_update);
 
 	if(!$query){

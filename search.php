@@ -5,9 +5,9 @@ session_start();
 include("conn.php");
 include("store_info.php");
 
-$sql_query_food = "SELECT * FROM menu WHERE (name LIKE '%".$_GET["keyword"]."%' OR des LIKE '%".$_GET["keyword"]."%' )";
-$query_food = mysqli_query($conn, $sql_query_food);
-$query_food2 = mysqli_query($conn, $sql_query_food);
+$sql_query_product = "SELECT * FROM product WHERE (name LIKE '%".$_GET["keyword"]."%' OR des LIKE '%".$_GET["keyword"]."%' )";
+$query_product = mysqli_query($conn, $sql_query_product);
+$query_product2 = mysqli_query($conn, $sql_query_product);
 
 $username = $_SESSION['username'];
 $shopping_cart_name = $username."_shopping_cart";
@@ -26,7 +26,7 @@ if(isset($_COOKIE[$shopping_cart_name])){
 }
 echo $total;
 
-if($query_food){ ?>
+if($query_product){ ?>
 <html>
 <title>Search result - <?php echo $store_name_banner ?></title>
 <meta charset="UTF-8">
@@ -122,12 +122,12 @@ if($query_food){ ?>
 
         <div class="w3-row-padding">
 
-            <?php $round_count=0 ; while($array_food=mysqli_fetch_array($query_food)){ $id=$array_food['id']; if($round_count==3 ){ ?>
+            <?php $round_count=0 ; while($array_product=mysqli_fetch_array($query_product)){ $id=$array_product['id']; if($round_count==3 ){ ?>
             <div class="w3-row-padding">
                 <?php $round_count=0 ; } ?>
                 <div class="w3-third w3-container">
                     <div class="w3-display-container">
-                        <img src="<?php echo $array_food['img']; ?>" style="width:100%; heigh:100%">
+                        <img src="<?php echo $array_product['img']; ?>" style="width:100%; heigh:100%">
                         <?php if($_SESSION[ 'status']=='admin' ){ ?>
                         <div class="w3-display-middle w3-display-hover">
                             <button class="w3-button w3-black" onclick="document.getElementById('<?php echo $id; ?>').style.display='block'">Edit</button>
@@ -140,9 +140,9 @@ if($query_food){ ?>
                         <div class="w3-display-middle w3-display-hover">
                             <form method="POST" action="addCart.php">
                                 <input type="hidden" value="<?php echo $id; ?>" name="id">
-                                <input type="hidden" value="<?php echo $array_food['name']; ?>" name="name">
-                                <input type="hidden" value="<?php echo $array_food['price']; ?>" name="price">
-                                <input type="hidden" value="<?php echo $array_food['img']; ?>" name="image">
+                                <input type="hidden" value="<?php echo $array_product['name']; ?>" name="name">
+                                <input type="hidden" value="<?php echo $array_product['price']; ?>" name="price">
+                                <input type="hidden" value="<?php echo $array_product['img']; ?>" name="image">
                                 <input type="hidden" value="1" name="quantity">
                                 <input type="submit" value="Add to cart" class="w3-button w3-black">
                             </form>
@@ -151,9 +151,9 @@ if($query_food){ ?>
                         <?php } ?> </div>
                     <p>
                         <a href="product_detail.php/?idq=<?php echo $id; ?>" style="text-decoration: none">
-                            <?php echo $array_food[ 'name']; ?>
+                            <?php echo $array_product[ 'name']; ?>
                         </a>
-                        <br><b><?php echo $array_food['price']; ?> Baht.</b>
+                        <br><b><?php echo $array_product['price']; ?> Baht.</b>
                     </p>
                 </div>
                 <?php $round_count++; } ?>
@@ -241,23 +241,23 @@ if($query_food){ ?>
         <?php } ?>
 
         <!-- Item Modal -->
-        <?php while($array_food=mysqli_fetch_array($query_food2)){ $id=$array_food['id']; ?>
+        <?php while($array_product=mysqli_fetch_array($query_product2)){ $id=$array_product['id']; ?>
         <div id="<?php echo $id; ?>" class="w3-modal">
             <div class="w3-modal-content w3-animate-zoom" style="padding:32px">
                 <div class="w3-container w3-white w3-center">
                     <i onclick="document.getElementById('<?php echo $id; ?>').style.display='none'" class="fa fa-remove w3-right w3-button w3-transparent w3-xxlarge"></i>
-                    <h2 class="w3-wide">Update <?php echo $array_food['name']; ?></h2>
+                    <h2 class="w3-wide">Update <?php echo $array_product['name']; ?></h2>
                     <p style="align:center">Please fill the item details.</p>
                     <form method="POST" action="update.php" enctype="multipart/form-data">
                         <input type="hidden" name="id" value="<?php echo $id; ?>">
                         <p>
-                            <input class="w3-input w3-border" type="text" placeholder="Enter Name" name="itemName" value="<?php echo $array_food['name']; ?>">
+                            <input class="w3-input w3-border" type="text" placeholder="Enter Name" name="itemName" value="<?php echo $array_product['name']; ?>">
                         </p>
                         <p>
-                            <input class="w3-input w3-border" type="number" placeholder="Price" name="price" value="<?php echo $array_food['price']; ?>">
+                            <input class="w3-input w3-border" type="number" placeholder="Price" name="price" value="<?php echo $array_product['price']; ?>">
                         </p>
                         <p>
-                            <input class="w3-input w3-border" type="text" placeholder="Enter Desciption (If any)" name="itemDes" value="<?php echo $array_food['des']; ?>">
+                            <input class="w3-input w3-border" type="text" placeholder="Enter Desciption (If any)" name="itemDes" value="<?php echo $array_product['des']; ?>">
                         </p>
                         <input type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom" onclick="document.getElementById('<?php echo $id; ?>').style.display='none'" value="Update">
                     </form>

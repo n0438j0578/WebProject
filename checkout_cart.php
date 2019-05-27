@@ -12,10 +12,10 @@
 
         foreach($cart_data as $keys => $values){
             $id = $cart_data[$keys]["item_id"];
-            $query_string = "SELECT amount FROM menu WHERE id = ".$id ;
+            $query_string = "SELECT amount FROM product WHERE id = ".$id ;
             $before_amount = mysqli_fetch_array(mysqli_query($conn, $query_string));
             $left = $before_amount['amount'] - $cart_data[$keys]['item_quantity'];
-            $update_sql = "UPDATE menu SET amount = ".$left." WHERE id = ".$id;
+            $update_sql = "UPDATE product SET amount = ".$left." WHERE id = ".$id;
             mysqli_query($conn, $update_sql);
         }
 

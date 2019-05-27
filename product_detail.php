@@ -7,7 +7,7 @@
 
   $idq = $_REQUEST['idq'];
 
-  $sql_query_product = 'SELECT * FROM menu WHERE id = '.$idq;
+  $sql_query_product = 'SELECT * FROM product WHERE id = '.$idq;
   $details = mysqli_fetch_array(mysqli_query($conn, $sql_query_product));
   $pName = $details['name'];
 
@@ -242,26 +242,26 @@
     <?php } ?>
 
     <!-- Update Item Modal -->
-    <?php while($array_food=mysqli_fetch_array($query_food2)){ $id=$array_food['id']; ?>
+    <?php while($array_product=mysqli_fetch_array($query_product2)){ $id=$array_product['id']; ?>
     <div id="<?php echo $id; ?>" class="w3-modal">
         <div class="w3-modal-content w3-animate-zoom" style="padding:32px">
             <div class="w3-container w3-white w3-center">
                 <i onclick="document.getElementById('<?php echo $id; ?>').style.display='none'" class="fa fa-remove w3-right w3-button w3-transparent w3-xxlarge"></i>
-                <h2 class="w3-wide">Update <?php echo $array_food['name']; ?></h2>
+                <h2 class="w3-wide">Update <?php echo $array_product['name']; ?></h2>
                 <p style="align:center">Please fill the item details.</p>
                 <form method="POST" action="update.php" enctype="multipart/form-data">
                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <p>
-                        <input class="w3-input w3-border" type="text" placeholder="Enter Name" name="itemName" value="<?php echo $array_food['name']; ?>">
+                        <input class="w3-input w3-border" type="text" placeholder="Enter Name" name="itemName" value="<?php echo $array_product['name']; ?>">
                     </p>
                     <p>
-                        <input class="w3-input w3-border" type="number" placeholder="Price" name="price" value="<?php echo $array_food['price']; ?>">
+                        <input class="w3-input w3-border" type="number" placeholder="Price" name="price" value="<?php echo $array_product['price']; ?>">
                     </p>
                     <p>
-                        <input class="w3-input w3-border" type="number" placeholder="Amount" name="amount" value="<?php echo $array_food['amount']; ?>">
+                        <input class="w3-input w3-border" type="number" placeholder="Amount" name="amount" value="<?php echo $array_product['amount']; ?>">
                     </p>
                     <p>
-                        <input class="w3-input w3-border" type="text" placeholder="Enter Desciption (If any)" name="itemDes" value="<?php echo $array_food['des']; ?>">
+                        <input class="w3-input w3-border" type="text" placeholder="Enter Desciption (If any)" name="itemDes" value="<?php echo $array_product['des']; ?>">
                     </p>
                     <input type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom" onclick="document.getElementById('<?php echo $id; ?>').style.display='none'" value="Update">
                 </form>
